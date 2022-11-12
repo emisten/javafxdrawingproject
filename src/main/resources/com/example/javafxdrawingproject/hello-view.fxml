@@ -4,16 +4,17 @@
 <?import javafx.scene.canvas.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
 
 <VBox alignment="CENTER" prefHeight="450" prefWidth="300" spacing="20.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.javafxdrawingproject.DrawingController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
-   <HBox prefHeight="100.0" prefWidth="200.0">
+   <HBox prefHeight="23.0" prefWidth="242.0">
       <children>
-         <Button mnemonicParsing="false" text="Circle" fx:id="circleButton" onAction="#handleButtonPressed" />
-         <Button mnemonicParsing="false" text="Rectangle" fx:id="rectangleButton" onAction="#handleButtonPressed" />
+         <Button fx:id="circleButton" mnemonicParsing="false" onMouseClicked="#handlePressed" text="Circle" />
+         <Button fx:id="rectangleButton" mnemonicParsing="false" onMouseClicked="#handlePressed" text="Rectangle" />
       </children>
    </HBox>
-   <Canvas id="canvas" height="200.0" width="200.0" />
+   <Canvas id="canvas" height="260.0" width="242.0" />
 </VBox>
