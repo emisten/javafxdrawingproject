@@ -4,19 +4,25 @@
 <?import javafx.scene.canvas.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
 
-<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.javafxdrawingproject.DrawingController">
+<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/11.0.14-internal"
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.javafxdrawingproject.DrawingController">
     <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
     </padding>
-   <HBox prefHeight="23.0" prefWidth="242.0" spacing="5.0">
-      <children>
-         <Button fx:id="circleButton" mnemonicParsing="false" onAction="#buttonPressed" text="Circle" />
-         <Button fx:id="rectangleButton" mnemonicParsing="false" onAction="#buttonPressed" text="Rectangle" />
-         <Label prefHeight="31.0" prefWidth="46.0" text="Size" textAlignment="RIGHT" />
-         <TextField fx:id="size" prefHeight="25.0" prefWidth="95.0" text="25" />
-      </children>
-   </HBox>
-   <Canvas fx:id="canvas" height="260.0" onMouseClicked="#draw" width="242.0" />
-   <ColorPicker />
+    <HBox prefHeight="23.0" prefWidth="242.0" spacing="5.0">
+        <children>
+            <Button mnemonicParsing="false" onAction="#buttonPressed" text="Circle"/>
+            <Button mnemonicParsing="false" onAction="#buttonPressed" text="Rectangle"/>
+            <Label prefHeight="31.0" prefWidth="46.0" text="Size" textAlignment="RIGHT"/>
+            <TextField fx:id="size" prefHeight="25.0" prefWidth="95.0" text="25"/>
+        </children>
+    </HBox>
+    <Canvas fx:id="canvas" height="260.0" onMouseClicked="#draw" width="242.0"/>
+    <ColorPicker fx:id="myColorPicker" onAction="#changeColor">
+        <value>
+            <Color/>
+        </value>
+    </ColorPicker>
 </VBox>

@@ -7,15 +7,18 @@ import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.control.ColorPicker;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
 public class DrawingController {
 
+    @FXML
+    private ColorPicker myColorPicker;
+
+    private Color color = Color.BLACK;
     private ShapeType shapeType = ShapeType.CIRCLE;
-
-
 
     @FXML
     public TextField size;
@@ -39,11 +42,12 @@ public class DrawingController {
 
     public void draw(MouseEvent mouseEvent) {
 
-        Shape shape = Shape.createShape(shapeType, mouseEvent.getX(), mouseEvent.getY());
+        double shapeSize = Double.parseDouble(size.getText());
+        Shape shape = Shape.createShape(shapeType, mouseEvent.getX()-shapeSize/2, mouseEvent.getY()-shapeSize/2);
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
-        gc.setFill(Color.BLUE);
-        double shapeSize = Double.parseDouble(size.getText());
+        gc.setFill(color);
+
 
 
         shape.draw(gc, shapeSize);
@@ -62,5 +66,12 @@ public class DrawingController {
         } else if ("Rectangle".equals(button.getText())) {
             shapeType = ShapeType.RECTANGLE;
         }
+    }
+
+    public void changeColor(ActionEvent actionEvent) {
+
+        color = myColorPicker.getValue();
+
+
     }
 }
