@@ -1,6 +1,8 @@
 package com.example.javafxdrawingproject;
 
-public class Shape {
+import javafx.scene.canvas.GraphicsContext;
+
+public abstract class Shape {
     private final double x;
     private final double y;
 
@@ -22,4 +24,6 @@ public class Shape {
             case RECTANGLE -> new Rectangle(x,y);
         };
     }
+
+    public abstract void draw (GraphicsContext gc, double shapeSize);
 }
