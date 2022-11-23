@@ -18,11 +18,13 @@
             <TextField fx:id="size" prefHeight="25.0" prefWidth="95.0" text="25" />
         </children>
     </HBox>
-   <Button mnemonicParsing="false" text="Undo" onAction="#undo" />
+   <Button mnemonicParsing="false" onAction="#undo" text="Undo" />
     <Canvas fx:id="canvas" height="260.0" onMouseClicked="#draw" width="242.0" />
     <ColorPicker fx:id="myColorPicker" onAction="#changeColor">
         <value>
             <Color />
         </value>
     </ColorPicker>
+   <RadioButton fx:id="drawButton" selected="true" mnemonicParsing="false" text="Draw" />
+   <RadioButton fx:id ="selectButton" mnemonicParsing="false" text="Select" />
 </VBox>

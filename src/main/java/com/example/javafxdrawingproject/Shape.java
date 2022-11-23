@@ -11,6 +11,8 @@ public abstract class Shape {
     private final double y;
     private final double shapeSize;
     private final Color color;
+    private boolean selected;
+
 
     public Shape(double x, double y, double shapeSize, Color color) {
         this.x = x;
@@ -25,6 +27,14 @@ public abstract class Shape {
 
     public double getShapeSize() {
         return shapeSize;
+    }
+
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
     }
 
     public double getX() {

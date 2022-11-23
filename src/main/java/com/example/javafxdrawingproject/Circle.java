@@ -10,6 +10,11 @@ public class Circle extends Shape{
     public void draw (GraphicsContext gc) {
         gc.setFill(getColor());
         gc.fillOval(getX(), getY(), getShapeSize(), getShapeSize());
+        if (isSelected()) {
+            gc.setStroke(Color.GREEN);
+            gc.strokeOval(getX(), getY(), getShapeSize(), getShapeSize());
+        }
+
 
     }
 }

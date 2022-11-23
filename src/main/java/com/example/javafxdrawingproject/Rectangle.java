@@ -5,10 +5,15 @@ import javafx.scene.paint.Color;
 
 public class Rectangle extends Shape {
     public Rectangle(double x, double y, double shapeSize, Color color) {
-        super(x, y, shapeSize, color );
+        super(x, y, shapeSize, color);
     }
-    public void draw (GraphicsContext gc) {
+
+    public void draw(GraphicsContext gc) {
         gc.setFill(getColor());
-        gc.fillRect(getX(), getY(), getShapeSize(), getShapeSize());;
+        gc.fillRect(getX(), getY(), getShapeSize(), getShapeSize());
+        if (isSelected()) {
+            gc.setStroke(Color.GREEN);
+            gc.strokeRect(getX(), getY(), getShapeSize(), getShapeSize());
+        }
     }
 }
