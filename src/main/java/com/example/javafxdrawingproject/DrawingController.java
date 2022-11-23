@@ -12,6 +12,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DrawingController {
 
     @FXML
@@ -26,6 +29,8 @@ public class DrawingController {
     @FXML
     public Canvas canvas;
 
+    private List<Shape> shapes = new ArrayList();
+
     public void initialize() {
         size.textProperty().addListener(new ChangeListener<String>() {
             @Override
@@ -37,26 +42,55 @@ public class DrawingController {
             }
         });
 
+
     }
+
+
 
 
     public void draw(MouseEvent mouseEvent) {
 
         double shapeSize = Double.parseDouble(size.getText());
-        Shape shape = Shape.createShape(shapeType, mouseEvent.getX()-shapeSize/2, mouseEvent.getY()-shapeSize/2);
+        Shape shape = Shape.createShape(shapeType, mouseEvent.getX()-shapeSize/2, mouseEvent.getY()-shapeSize/2, shapeSize, color);
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
-        gc.setFill(color);
 
 
 
-        shape.draw(gc, shapeSize);
+        /**
+         * listOfShapes.add(shape);
+         *
+         * public void undo() {
+         *     listOfShapes.... ta bort sista
+         *     gc.clearCanvas();
+         *     for (Shape shape : shape) {
+         *         draw(shap
+         *     }
+         * }
+         * **/
+
+
+        shape.draw(gc);
+        shapes.add(shape);
+
+
+
 
 
         System.out.println("Shape: " + shapeType);
         System.out.println("Mouse x position: " + mouseEvent.getX());
         System.out.println("Mouse y position: " + mouseEvent.getY());
 
+    }
+
+    public void undo () {
+        shapes.remove(shapes.size()-1);
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+
+        for (Shape shape : shapes ) {
+            shape.draw(gc);
+        }
     }
 
     public void buttonPressed(ActionEvent actionEvent) {

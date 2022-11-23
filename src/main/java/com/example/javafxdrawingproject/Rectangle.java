@@ -1,12 +1,14 @@
 package com.example.javafxdrawingproject;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 public class Rectangle extends Shape {
-    public Rectangle(double x, double y) {
-        super(x, y);
+    public Rectangle(double x, double y, double shapeSize, Color color) {
+        super(x, y, shapeSize, color );
     }
-    public void draw (GraphicsContext gc, double shapeSize) {
-        gc.fillRect(getX(), getY(), shapeSize, shapeSize);
+    public void draw (GraphicsContext gc) {
+        gc.setFill(getColor());
+        gc.fillRect(getX(), getY(), getShapeSize(), getShapeSize());;
     }
 }
