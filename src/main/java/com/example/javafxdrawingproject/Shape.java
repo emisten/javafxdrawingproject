@@ -9,8 +9,8 @@ import javafx.scene.paint.Color;
 public abstract class Shape {
     private final double x;
     private final double y;
-    private final double shapeSize;
-    private final Color color;
+    private double shapeSize;
+    private Color color;
     private boolean selected;
 
 
@@ -33,16 +33,23 @@ public abstract class Shape {
         return selected;
     }
 
+    public void setSize(double shapeSize) {
+        this.shapeSize = shapeSize;
+    }
+    public void setColor (Color color) {
+        this.color = color;
+    }
+
     public void setSelected(boolean selected) {
         this.selected = selected;
     }
 
     public double getX() {
-        return x;
+        return x - shapeSize / 2;
     }
 
     public double getY() {
-        return y;
+        return y - shapeSize / 2;
     }
     public static Shape createShape(ShapeType type, double x, double y, double shapeSize, Color color){
         return switch (type) {

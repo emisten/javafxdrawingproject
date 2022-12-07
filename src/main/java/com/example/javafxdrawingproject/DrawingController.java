@@ -7,9 +7,13 @@ import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
+import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.stage.FileChooser;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
@@ -17,10 +21,13 @@ import java.util.ListIterator;
 public class DrawingController {
 
     @FXML
-    public RadioButton selectButton;
+    private RadioButton selectButton;
 
     @FXML
-    public RadioButton drawButton;
+    private RadioButton drawButton;
+
+    @FXML
+    private Button saveButton;
 
     @FXML
     private ColorPicker myColorPicker;
@@ -39,6 +46,7 @@ public class DrawingController {
 
     private ToggleGroup modeToggleGroup = new ToggleGroup();
 
+
     public void initialize() {
         size.textProperty().addListener(new ChangeListener<String>() {
             @Override
@@ -47,21 +55,39 @@ public class DrawingController {
                 if (!newValue.matches("\\d*")) {
                     size.setText(newValue.replaceAll("\\D", ""));
                 }
+                // ListIterator<Shape> newShapes = shapes.listIterator(shapes.size());
+                RadioButton rb = (RadioButton) modeToggleGroup.getSelectedToggle();
+                double shapeSize = Double.parseDouble(size.getText());
+
+                if (rb == selectButton) {
+
+                    for (Shape shape : shapes) {
+                        if (shape.isSelected()) {
+                            shape.setSize(shapeSize);
+                            break;
+                        }
+                    }
+                    refreshCanvas();
+                }
+
 
                 //check which radio button is enabled
+
 
                 //if it's the select button:
                 //  take size and put it on the selected shape
                 // loop.... -> if (shape.isSelected())
                 //shape.setSize(size från textfield)
 
-                // 
+                //
             }
 
         });
 
+
         drawButton.setToggleGroup(modeToggleGroup);
         selectButton.setToggleGroup(modeToggleGroup);
+
 
         modeToggleGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
             public void changed(ObservableValue<? extends Toggle> ob,
@@ -84,7 +110,7 @@ public class DrawingController {
     public void draw(MouseEvent mouseEvent) {
 
         double shapeSize = Double.parseDouble(size.getText());
-        Shape shape = Shape.createShape(shapeType, mouseEvent.getX() - shapeSize / 2, mouseEvent.getY() - shapeSize / 2, shapeSize, color);
+        Shape shape = Shape.createShape(shapeType, mouseEvent.getX(), mouseEvent.getY(), shapeSize, color);
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
 
@@ -143,6 +169,23 @@ public class DrawingController {
         refreshCanvas();
     }
 
+          public void save() {
+//        FileChooser fileChooser = new FileChooser();
+//        fileChooser.setTitle("Save Image");
+//        File file = fileChooser.showSaveDialog(null);
+//        if (file != null) {
+//            try {
+//                WritableImage wim = new WritableImage((int) canvas.getWidth(), (int) canvas.getHeight());
+//                ImageIO.write(SwingFXUtils.fromFXImage(pic.getImage(),
+//                       null), "png", file);
+//                System.out.println("Pretending to write file!!!!");
+//            } catch (Exception ex) {
+//                System.out.println(ex.getMessage());
+//            }
+//        }
+    }
+
+
     private void refreshCanvas() {
         GraphicsContext gc = canvas.getGraphicsContext2D();
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
@@ -164,12 +207,23 @@ public class DrawingController {
     public void changeColor(ActionEvent actionEvent) {
 
         color = myColorPicker.getValue();
+        RadioButton rb = (RadioButton) modeToggleGroup.getSelectedToggle();
+
+        if (rb == selectButton) {
+
+            for (Shape shape : shapes) {
+                if (shape.isSelected()) {
+                    shape.setColor(color);
+                    break;
+                }
+            }
+            refreshCanvas();
 
 
+            //gör samma som textfield shitten!!!
 
-        //gör samma som textfield shitten!!!
 
+        }
 
     }
-
 }

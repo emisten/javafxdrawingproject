@@ -25,6 +25,7 @@
             <Color />
         </value>
     </ColorPicker>
-   <RadioButton fx:id="drawButton" selected="true" mnemonicParsing="false" text="Draw" />
-   <RadioButton fx:id ="selectButton" mnemonicParsing="false" text="Select" />
+   <RadioButton fx:id="drawButton" mnemonicParsing="false" selected="true" text="Draw" />
+   <RadioButton fx:id="selectButton" mnemonicParsing="false" text="Select" />
+   <Button fx:id ="saveButton" mnemonicParsing="false" onAction="#save" text="Save" />
 </VBox>

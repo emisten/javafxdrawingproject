@@ -12,6 +12,7 @@ public class Circle extends Shape{
         gc.fillOval(getX(), getY(), getShapeSize(), getShapeSize());
         if (isSelected()) {
             gc.setStroke(Color.GREEN);
+            gc.setLineWidth(2);
             gc.strokeOval(getX(), getY(), getShapeSize(), getShapeSize());
         }
 
