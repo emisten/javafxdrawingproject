@@ -2,6 +2,7 @@ package com.example.javafxdrawingproject;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
@@ -12,6 +13,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 
+import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -170,20 +172,23 @@ public class DrawingController {
     }
 
           public void save() {
-//        FileChooser fileChooser = new FileChooser();
-//        fileChooser.setTitle("Save Image");
-//        File file = fileChooser.showSaveDialog(null);
-//        if (file != null) {
-//            try {
-//                WritableImage wim = new WritableImage((int) canvas.getWidth(), (int) canvas.getHeight());
-//                ImageIO.write(SwingFXUtils.fromFXImage(pic.getImage(),
-//                       null), "png", file);
-//                System.out.println("Pretending to write file!!!!");
-//            } catch (Exception ex) {
-//                System.out.println(ex.getMessage());
-//            }
-//        }
-    }
+        FileChooser fileChooser = new FileChooser();
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("PNG file (*.png)", "*.png");
+        fileChooser.getExtensionFilters().add(extFilter);
+        fileChooser.setTitle("Save Image");
+        File file = fileChooser.showSaveDialog(null);
+        if (file != null) {
+            try {
+                WritableImage wim = new WritableImage((int) canvas.getWidth(), (int) canvas.getHeight());
+                canvas.snapshot(null, wim);
+                ImageIO.write(SwingFXUtils.fromFXImage(wim,
+                       null), "png", file);
+                System.out.println("Pretending to write file!!!!");
+            } catch (Exception ex) {
+                System.out.println(ex.getMessage());
+            }
+        }
+  }
 
 
     private void refreshCanvas() {
