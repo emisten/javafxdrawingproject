@@ -15,7 +15,6 @@ import javafx.stage.FileChooser;
 
 import javax.imageio.ImageIO;
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
@@ -27,9 +26,6 @@ public class DrawingController {
 
     @FXML
     private RadioButton drawButton;
-
-    @FXML
-    private Button saveButton;
 
     @FXML
     private ColorPicker myColorPicker;
@@ -44,9 +40,9 @@ public class DrawingController {
     @FXML
     public Canvas canvas;
 
-    private List<Shape> shapes = new ArrayList();
+    private final List<Shape> shapes = new ArrayList<>();
 
-    private ToggleGroup modeToggleGroup = new ToggleGroup();
+    private final ToggleGroup modeToggleGroup = new ToggleGroup();
 
 
     public void initialize() {
@@ -57,7 +53,6 @@ public class DrawingController {
                 if (!newValue.matches("\\d*")) {
                     size.setText(newValue.replaceAll("\\D", ""));
                 }
-                // ListIterator<Shape> newShapes = shapes.listIterator(shapes.size());
                 RadioButton rb = (RadioButton) modeToggleGroup.getSelectedToggle();
                 double shapeSize = Double.parseDouble(size.getText());
 
@@ -72,16 +67,6 @@ public class DrawingController {
                     refreshCanvas();
                 }
 
-
-                //check which radio button is enabled
-
-
-                //if it's the select button:
-                //  take size and put it on the selected shape
-                // loop.... -> if (shape.isSelected())
-                //shape.setSize(size från textfield)
-
-                //
             }
 
         });
@@ -116,19 +101,6 @@ public class DrawingController {
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
 
-        /**
-         * listOfShapes.add(shape);
-         *
-         * public void undo() {
-         *     listOfShapes.... ta bort sista
-         *     gc.clearCanvas();
-         *     for (Shape shape : shape) {
-         *         draw(shap
-         *     }
-         * }
-         * **/
-
-
         shape.draw(gc);
         shapes.add(shape);
 
@@ -146,13 +118,9 @@ public class DrawingController {
         ListIterator<Shape> li = shapes.listIterator(shapes.size());
         while (li.hasPrevious()) {
             Shape shape = li.previous();
-            if (mouseEvent.getX() >= shape.getX()
-                    && mouseEvent.getX() <= shape.getX() + shape.getShapeSize()
-                    && mouseEvent.getY() >= shape.getY()
-                    && mouseEvent.getY() <= shape.getY() + shape.getShapeSize()
+            if (overlaps(mouseEvent.getX(), mouseEvent.getY(), shape)
                     && !foundOverlap) {
 
-                // IT OVERLAPS!!!
                 shape.setSelected(true);
                 foundOverlap = true;
 
@@ -166,12 +134,21 @@ public class DrawingController {
         refreshCanvas();
     }
 
+    public static boolean overlaps(double mouseX, double mouseY, Shape shape) {
+        return
+                mouseX >= shape.getX()
+                        && mouseX <= shape.getX() + shape.getShapeSize()
+                        && mouseY >= shape.getY()
+                        && mouseY <= shape.getY() + shape.getShapeSize();
+    }
+
+
     public void undo() {
         shapes.remove(shapes.size() - 1);
         refreshCanvas();
     }
 
-          public void save() {
+    public void save() {
         FileChooser fileChooser = new FileChooser();
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("PNG file (*.png)", "*.png");
         fileChooser.getExtensionFilters().add(extFilter);
@@ -182,13 +159,13 @@ public class DrawingController {
                 WritableImage wim = new WritableImage((int) canvas.getWidth(), (int) canvas.getHeight());
                 canvas.snapshot(null, wim);
                 ImageIO.write(SwingFXUtils.fromFXImage(wim,
-                       null), "png", file);
+                        null), "png", file);
                 System.out.println("Pretending to write file!!!!");
             } catch (Exception ex) {
                 System.out.println(ex.getMessage());
             }
         }
-  }
+    }
 
 
     private void refreshCanvas() {
@@ -223,10 +200,6 @@ public class DrawingController {
                 }
             }
             refreshCanvas();
-
-
-            //gör samma som textfield shitten!!!
-
 
         }
 
